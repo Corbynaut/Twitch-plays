@@ -1,0 +1,218 @@
+{% extends "layout.html" %}
+{% block head %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+	<!--
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/Modal.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/Command.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/alert.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/controller.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/load.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
+	-->
+{% endblock head %}
+{% block content %}	
+	<authentication-window id="authentication-window" class="authentication-window"></authentication-window>
+	
+	<div id="alert-manager"></div>
+
+	<!--Header-->
+		<nav class="header">
+			<div class="header-logo">
+				Twitch plays
+			</div>
+			<div class="header-left">
+				<ul class="nav navigation-list">
+					<li class="navigation-list-item">
+						<a type="button" id="command-window-tab" class = "active" data-bs-toggle="pill" data-bs-target="#command-window-panel">
+							<span style="display: inline-block;">Commands</span>
+						</a>
+					</li>
+					<li class="navigation-list-item">
+						<a type="button" id="controller-window-tab" class = "" data-bs-toggle="pill" data-bs-target="#controller-window-panel">
+							<span style="display: inline-block;">Players</span>
+						</a>
+					</li>
+					<li class="navigation-list-item">	
+						<a type="button" id="load-window-tab" onclick="load_window.show()" data-bs-toggle="pill" data-bs-target="#load-window-panel">
+							<span style="display: inline-block;">Load</span>
+						</a>
+					</li>				
+					<li class="navigation-list-item">	
+						<a type="button">
+							<span style="display: inline-block;">???</span>
+						</a>
+					</li>
+					<li class="navigation-list-item">	
+						<a type="button" data-bs-toggle="pill" data-bs-target="#settings-window-panel">
+							<span style="display: inline-block;">Settings</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="header-right">
+				<button type="button" id="pause-button" class="btn btn-outline-primary pause-button" onclick="pause_toggle()">Pause</button>				
+			</div>
+		</nav>
+		<button id="btn-uncollapse-chat" class = "uncollapse-button bi bi-arrow-bar-left" role="button" onclick="chat_container.show()"></button> 
+		<div class="main-wrapper" style="margin: 0; padding: 0;">
+		
+		<!--
+		<div id="sidebar" class="twitch-plays-sidebar">
+			<ul class="nav nav-pills nav-flush twitch-plays-sidebar-list">
+				<li class="nav-item twitch-plays-sidebar-list-item">
+					<a onclick="sidbar_expand()">
+						<i id="sidebar-expand" class="bi bi-arrow-bar-right twitch-plays-sidebar-list-item-expand"></i>
+					</a>
+				</li>				
+				<li class="nav-item twitch-plays-sidebar-list-item">
+					<a id="command-window-tab" class = "active" data-bs-toggle="pill" data-bs-target="#command-window-panel">
+						<i class="bi bi-code-slash twitch-plays-sidebar-list-item-icon" style="display: inline-block;"></i>
+						<span style="display: inline-block;">Commands</span>
+					</a>
+				</li>
+				<li class="nav-item twitch-plays-sidebar-list-item">
+					<a id="controller-window-tab" class = "" data-bs-toggle="pill" data-bs-target="#controller-window-panel">
+						<i class="bi bi-controller twitch-plays-sidebar-list-item-icon" style="display: inline-block;"></i>
+						<span style="display: inline-block;">Players</span>
+					</a>
+				</li>
+				<li class="nav-item twitch-plays-sidebar-list-item">	
+					<a id="load-window-tab" onclick="load_window.show()" data-bs-toggle="pill" data-bs-target="#load-window-panel">
+						<i class="bi bi-file-earmark-arrow-down twitch-plays-sidebar-list-item-icon" style="display: inline-block;"></i>
+						<span style="display: inline-block;">Load</span>
+					</a>
+				</li>				
+				<li class="nav-item twitch-plays-sidebar-list-item">	
+					<a>
+						<i class="bi bi-bar-chart-line twitch-plays-sidebar-list-item-icon" style="display: inline-block;"></i>
+						<span style="display: inline-block;">???</span>
+					</a>
+				</li>
+				<li class="nav-item twitch-plays-sidebar-list-item">	
+					<a data-bs-toggle="pill" data-bs-target="#settings-window-panel">
+						<i class="bi bi-gear twitch-plays-sidebar-list-item-icon" style="display: inline-block;"></i>
+						<span style="display: inline-block;">Settings</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	-->
+		
+		<!--MAIN-->
+		<div class="main-content container-fluid tab-content">		
+			<div id="load-window-panel" class="container-fluid tab-pane fade" style="position: relative; background-color: inherit; height: 100%;">
+				<div id="load-window"  class="container-fluid"></div>
+			</div>
+
+			<div id="command-window-panel" class="command-window-panel container-fluid tab-pane fade show active">
+				<!--
+				<div class="command-window">
+					<button class="btn btn-primary" onclick="command_container.add()">Add command</button>
+					<div id="command-list" class="container-fluid" style="overflow-y: scroll;"></div>
+				</div>
+				-->
+				<command-manager id="command-manager"></command-manager>
+			</div>
+
+			<div id="controller-window-panel" class="controller-window-panel container-fluid tab-pane fade">
+				<div id="controller-manager"></div>	
+			</div>
+
+			<div id="settings-window-panel" class="container-fluid tab-pane fade" style="position: relative; background-color: inherit;">
+				<h1>Settings</h1>
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">K-most-messgaes</span>
+					</div>
+					<input id="command-k-most" style="width: 5rem; text-align: right;" type="number" min="0" class="form-control" value=1>
+				</div>
+				<div>
+					<span>Interval</span>
+					<input id="command-interval" type="number" min="0" max="60" step="1" class="form-control" value=0 style="display: inline-block; text-align: right;">
+					<span>s</span>
+				</div>				
+				<button type="button" class="btn btn-outline-primary" onclick="update()">UPDATE</button>
+			</div>
+		</div>
+
+		<!--CHAT-->
+		<div id="chat-wrapper"></div>
+	</div>
+{% endblock content %}
+
+{% block script %}  
+	<!-- Socketio scripts -->	
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
+  	<script type="text/javascript" src="{{url_for('static', filename='js/socketio.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static', filename='js/Modal.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static', filename='js/Autocomplete.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static', filename='js/Chat.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static', filename='js/Alert.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static', filename='js/Controller.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static', filename='js/load.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static', filename='js/Login.js')}}"></script>
+	
+	<script type="text/javascript" src="{{url_for('static', filename='js/Command.js')}}"></script>
+
+	<!-- CHART -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+	</script>
+
+	<script>
+		const command_manager = document.getElementById("command-manager");
+		//const command_div = document.getElementById("command-list");
+		//const command_container = new CommandContainer(command_div);
+		const chat_div = document.getElementById("chat-wrapper");
+		const chat_container = new ChatContainer(chat_div);
+		const alert_manager_div = document.getElementById("alert-manager");
+		const alert_manager = new AlertManager(alert_manager_div);
+		
+		const controller_manager_div = document.getElementById("controller-manager");
+		const controller_manager = new ControllerManager(controller_manager_div);
+		
+		const load_window_div = document.getElementById("load-window");
+		const load_window = new LoadWindow(load_window_div);
+
+		const authentication_window =document.getElementById("authentication-window");
+
+		function pause_toggle() {			
+			const button = document.getElementById("pause-button");
+			if(button.textContent == "Pause") {
+				socket.emit("pause_twitch_plays");
+			}
+			else {
+				socket.emit("resume_twitch_plays");
+			}
+		}
+
+		function update() {
+			update_interval();
+			update_k_most();
+			command_manager.update();
+		}
+
+		function update_interval() {
+			var interval = parseInt(document.getElementById("command-interval").value);
+			socket.emit('update_command_interval', interval);
+		}
+
+		function update_k_most() {
+			var k_most = parseInt(document.getElementById("command-k-most").value);
+			socket.emit('update_command_k_most', k_most);
+		}
+
+		function load_commands(){
+			socket.emit('load_commands', "test");
+		}
+
+		function sidbar_expand(){
+			document.getElementById('sidebar').classList.toggle('twitch-plays-sidebar-expand');
+			document.getElementById('sidebar-expand').classList.toggle('bi-arrow-bar-right');
+			document.getElementById('sidebar-expand').classList.toggle('bi-arrow-bar-left');
+		}
+
+	</script>
+
+{% endblock script %}

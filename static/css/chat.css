@@ -1,0 +1,233 @@
+:root {
+    --chat-background-color: #18181b;
+    --chat-scrollbar-color: #1d1d20;
+    --chat-text-color: #e8e5ea;
+    --chat-box-shadow-color: #3c3c3f;
+    --chat-width: 22vw;
+}
+
+.chat-wrapper {    
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 100%;
+    background-color: var(--chat-background-color);
+    color: var(--chat-text-color);
+    width: var(--chat-width); 
+    display:grid; 
+    margin: 0;
+    padding: 0;
+    -webkit-box-shadow: -1px 1px 1px var(--chat-box-shadow-color);
+    z-index: 5000;
+}
+
+.chat-flex-wrapper {
+    max-height: 100%;
+    width: inherit;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    -webkit-box-shadow: inset 0 0 2px var(--chat-box-shadow-color);
+    height: 7rem;
+    text-align: center;
+}
+
+.chat-header-carousel-item {
+    white-space: pre-line;
+    height: 100%;
+}
+
+.chat-body-carousel-item{
+    height: 100%;
+}
+
+.carousel {
+    overflow: hidden;
+    height: 100%;
+}
+
+.header-carousel { 
+    height: 4rem;
+}
+
+.chat {    
+    background-color: var(--chat-background-color);
+    color: var(--chat-text-color);
+    width: inherit;
+    height: 100%;
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column-reverse;
+    align-self: flex-end;
+}
+
+.chat-carousel {  
+    background-color: var(--chat-background-color);
+    color: var(--chat-text-color);
+    width: inherit;
+    padding: 0px;
+    padding-bottom: 10px;
+    box-sizing: border-box; 
+    overflow-y: scroll; 
+    overflow-x: hidden; 
+    scroll-behavior: smooth; 
+    height: 100%;
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column-reverse;
+    align-self: flex-end;
+}
+
+.chat-collapsed {
+    display: none;
+}
+
+.btn-moved {
+    left:0;
+}
+
+.collapse-button {
+    float: left;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 2px;
+    border-color: transparent;
+    background-color: transparent;
+    font-size: 1.3rem;
+    color: white;
+}
+
+.uncollapse-button {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    border-color: transparent;
+    background-color: transparent;
+    color: white;
+    margin: 5px;
+    left: calc(100% - 2.6rem);
+    font-size: 1.3rem;
+}
+
+.chat-message {
+    box-sizing: border-box;
+}
+
+.chat-body-carousel-inner {
+    height: 100%;
+}
+
+.global-chat-join-window {
+    height:100%;
+    text-align: center;
+    vertical-align: middle;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.join-window {
+    position: fixed;
+    background-color: var(--chat-background-color);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: inherit;
+    overflow-y: scroll;
+    z-index: 5001;
+    padding: 10px;
+    padding-right: 0;
+}
+
+.join-window-collapsed{
+    visibility: hidden;
+}
+
+.join-window-close-btn{
+    height: fit-content;
+    width: fit-content;
+    color: inherit;
+}
+
+.autocomplete-channel-item{
+    height: 3rem;
+    margin: 0.5rem;
+}
+
+/*
+.autocomplete-channel-item:hover{
+    height:50px;
+    margin: 5px;
+}
+*/
+
+.autocomplete-channel-item-image{
+    height:100%;
+    border-radius: 50%;
+}
+
+.autocomplete-channel-item-displayname{
+    height:100%;
+    margin-left: 10px
+}
+
+.autocomplete-channel-item-live{
+    color: red;
+    font-size: 30px;
+    float: right;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: var(--chat-scrollbar-color);
+    -webkit-box-shadow: inset 0 0 2px var(--chat-box-shadow-color);
+}
+
+@media not all and (hover:hover), (max-width: 800px) {
+    /*
+    html {
+        font-size: 20px;
+    }
+    */
+    
+    body {
+        position: fixed;
+        height: 100%;
+    }
+
+    .chat-wrapper {           
+        position: absolute;
+        height: inherit;
+        width: 100vw; 
+    }
+
+    .chat-collapsed {
+        visibility: hidden;
+    }
+
+    .twitch-plays-sidebar-expand {
+        width: 4rem;
+    }
+
+    .twitch-plays-sidebar-list-item-expand {
+        visibility: hidden;
+    }
+    /*
+    :root {
+        font-size: 2rem;
+    }
+    */
+  }
+
+@media not all and (hover:hover) {
+    html {
+        font-size: min(2.5vh, 2.5vw);
+    }
+}

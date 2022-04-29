@@ -1,0 +1,63 @@
+:root {
+    --sidebar-background-color: #18181b;    
+    --sidebar-text-color: #e8e5ea;
+}
+
+.twitch-plays-sidebar {
+    width: 4rem;
+    background-color: var(--sidebar-background-color);
+    color: var(--sidebar-text-color)
+}
+
+.twitch-plays-sidebar-expand {
+    width: fit-content;
+}
+
+.twitch-plays-sidebar-list {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    width: 100%;
+}
+
+.twitch-plays-sidebar-list-item {
+    padding-bottom: 1rem;
+    white-space: nowrap;
+    width: 100%;
+    color: var(--sidebar-text-color);
+}
+
+.twitch-plays-sidebar-list-item > a {
+    color: var(--sidebar-text-color);
+    text-decoration: none;
+}
+
+.twitch-plays-sidebar-list-item > a.active{
+    color: purple;    
+    text-decoration: none;
+}
+
+.twitch-plays-sidebar-list-item-icon {
+    font-size: 2rem;
+    padding-right: 1rem;
+}
+
+.twitch-plays-sidebar-list-item-expand {
+    display: inline-block;
+    padding-bottom: 1rem;
+    font-size: 1rem;
+    padding-right: 1rem;
+    float: right;
+    padding: 0;
+}
+
+@media not all and (hover:hover), (max-width: 800px) {
+    .twitch-plays-sidebar-expand {
+        width: 4rem;
+    }
+
+    .twitch-plays-sidebar-list-item-expand {
+        visibility: hidden;
+        display: none;
+    }
+  }
